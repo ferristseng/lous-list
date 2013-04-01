@@ -33,6 +33,7 @@ function appendToClassList(section) {
         section.time.raw +
       "</p>" + 
       "<p>" +
+        "<a href='" + section.source + "'>Source</a> - " + 
         "<a href='#' class='lousList_extension_class_remove' id='remove-" + section.semester + "-" + section.nbr+ "'>" +
           "Remove" +
         "</a>" +

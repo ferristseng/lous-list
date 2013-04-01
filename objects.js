@@ -26,9 +26,10 @@ function Course(nbr, name) {
  * place
  * semester
  * id
+ * source
  * ======================
  */
-function Section(course, nbr, type, instructor, time, place, semester) {
+function Section(course, nbr, type, instructor, time, place, semester, source) {
   
   this.course = course;
   this.nbr = nbr;
@@ -38,6 +39,7 @@ function Section(course, nbr, type, instructor, time, place, semester) {
   this.place = place;
   this.semester = semester;
   this.id = this.semester + "-" + this.nbr;
+  this.source = source;
 
 }
 
@@ -162,7 +164,8 @@ function loadSectionList() {
       convertedList = [];
   for(var key in storedList) {
     convertedList.push(new Section(storedList[key].course, storedList[key].nbr, storedList[key].type,
-      storedList[key].instructor, storedList[key].time.raw, storedList[key].place, storedList[key].semester));
+      storedList[key].instructor, storedList[key].time.raw, storedList[key].place, storedList[key].semester,
+      storedList[key].source));
   }
   return new SectionList(convertedList);
 }
@@ -225,10 +228,15 @@ SectionList.prototype.remove = function(section_nbr, semester) {
  * active
  * ======================
  */
-function ConflictList() {
+function ConflictList(obj) {
 
-  this.conflicts  = {}
-  this.active     = {}
+  if(!obj) {
+    this.conflicts  = {};
+    this.active     = {};
+  } else {
+    this.conflicts  = obj.conflicts;
+    this.active     = obj.active;
+  }
 
 }
 
@@ -257,5 +265,15 @@ ConflictList.prototype.add = function(section) {
   this.active[section.id] = section;
 
   return this.conflicts[section.id];
+
+}
+
+ConflictList.prototype.remove = function(section) {
+
+}
+
+ConflictList.prototype.save = function() {
+
+  localStorage["conflictList"] = JSON.stringify(this.list);
 
 }
