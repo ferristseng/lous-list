@@ -34,13 +34,13 @@ $(function() {
   $(".lousList_extension_saveSection").on("click", function(e) {
     e.stopPropagation();
     e.preventDefault();
-    var selectedRow = $(e.target).parents(".S"),
-        sectionRowData = parseSectionRow(selectedRow),
+    var selectedRow = $(e.target).parents(".S");
+    var sectionRowData = parseSectionRow(selectedRow),
         courseRowData = parseCourseRow(selectedRow.prevAll(".CourseInfo:first"));
         course = new Course(courseRowData.courseNbr, courseRowData.courseName),
         section = new Section(course, sectionRowData.sectionNbr, sectionRowData.sectionType,
           sectionRowData.sectionInstructor, sectionRowData.sectionTime, sectionRowData.sectionPlace,
-          semester);
+          semester, document.URL);
     if(sectionList.add(section)) {
       appendToClassList(section);
     }
@@ -140,7 +140,7 @@ $(function() {
             clearInterval(interval);
           }
         });
-      }, 750);
+      }, 1050);
       hovered = el;
     },
     "mouseleave": function() {
