@@ -1,3 +1,7 @@
+table {
+  max-width: 1120px;
+}
+
 .lousList_extension {
   position: fixed;
   padding: 8px;
