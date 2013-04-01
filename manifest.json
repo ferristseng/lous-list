@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+
+  "name": "Lou's List",
+  "description": "Adds additional functionality onto Lou's List",
+  "version": "1.0", 
+
+  "permissions": [ ],
+
+  "content_scripts": [{
+    "matches": [
+      "http://rabi.phys.virginia.edu/mySIS/CS2/*"
+    ],
+    "css": [ 
+      "style.css" 
+    ],
+    "js": [
+      "jquery-1.9.1.min.js",
+      "utility.js",
+      "objects.js",
+      "page.js",
+      "event.js" 
+    ],
+    "run_at": "document_end"
+  }]
+}

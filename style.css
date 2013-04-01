@@ -1,0 +1,95 @@
+.lousList_extension {
+  position: fixed;
+  padding: 8px;
+  right: 8px;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.6);
+  overflow: auto;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  z-index: 9999;
+}
+
+.lousList_extension ul {
+  list-style-type: square;
+  margin: 0em;
+  padding: 0em 0em 0em 2em;
+}
+
+.lousList_extension ul li {
+
+}
+
+.lousList_extension_actions,
+.lousList_extension h1,
+.lousList_extension h2,
+.lousList_extension h3,
+.lousList_extension h4 {
+  margin: 8px 0px;;
+}
+
+.lousList_extension_actions {
+}
+
+.lousList_extension_class {
+  padding: 2px 4px;
+  transition: background 1s;
+}
+
+.lousList_extension_class:hover {
+  background: rgb(242, 242, 242);
+  cursor: pointer;
+}
+
+.lousList_extension_class.no-conflict {
+  background: rgba(173, 230, 172, 0.7);
+}
+
+.lousList_extension_class.conflict {
+  background: rgba(235, 58, 58, 0.4);
+}
+
+.lousList_extension_class p {
+  margin: 0px;
+  padding: 0px;
+}
+
+.lousList_extension_class p:last-child {
+  margin: 4px 0px 4px 0px;
+}
+
+.lousList_extension_class_popup {
+  width: 472px;
+  right: 312px;
+  position: fixed;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  z-index: 9999;
+  top: -9999px;
+  // uncomment for fly-down
+  // transition: top 0.5s;
+}
+
+.lousList_extension_class_popup_inner {
+  background: rgb(242, 242, 242);
+  padding: 2px 4px;
+  border: 1px solid rgb(130, 130, 130);
+  margin-right: 10px;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.25);
+}
+
+.lousList_extension_class_popup table {
+  border: none;
+  background: rgb(242, 242, 242);
+  width: 100%;
+}
+
+.lousList_extension_class_popup_arrow {
+  float: right;
+  width: 0;
+  height: 0; 
+  position: relative;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid rgb(130, 130, 130);
+}
