@@ -21,6 +21,6 @@
       "page.js",
       "event.js" 
     ],
-    "run_at": "document_end"
+    "run_at": "document_start"
   }]
 }
