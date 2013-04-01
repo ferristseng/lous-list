@@ -48,6 +48,11 @@ $(function() {
           "<a href='#' class='lousList_extension_saveSection'>Save</a>" +
         "</td>" +
       "");
+    } else if(
+      !$(this).hasClass('SectionTopicOdd') && !$(this).hasClass('SectionTopicEven') &&
+      !$(this).hasClass('SectionTitleOdd') && !$(this).hasClass('SectionTitleEven')
+    ) {
+      $(this).append("<td></td>");
     }
   });
 
