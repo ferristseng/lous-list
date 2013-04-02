@@ -53,6 +53,10 @@ Section.prototype.isOverlap = function(section) {
     return false;
   }
 
+  if(section.semester !== this.semeseter) {
+    return false;
+  }
+
   var convertTimeToScore = function(timestr) {
     var re = new RegExp("^(\\d{1,2}):(\\d{2})([A-Z]{2})$", "g"),
         parts = re.exec(timestr);
