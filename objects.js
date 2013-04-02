@@ -255,7 +255,12 @@ function ConflictList(obj) {
     this.active     = {};
   } else {
     this.conflicts  = obj.conflicts;
-    this.active     = obj.active;
+    this.active     = {};
+    for(var s in obj.active) {
+      this.active[s] = new Section(obj.active[s].course, obj.active[s].nbr,
+        obj.active[s].type, obj.active[s].instructor, obj.active[s].time.raw,
+        obj.active[s].place, obj.active[s].semester, obj.active[s].source);
+    }
   }
 
 }
@@ -285,6 +290,8 @@ ConflictList.prototype.add = function(section) {
 
   this.active[section.id] = section;
 
+  this.save();
+
   return this.conflicts[section.id];
 
 }
@@ -310,6 +317,8 @@ ConflictList.prototype.remove = function(section, noConflicts) {
   delete this.conflicts[section.id];
   delete this.active[section.id];
 
+  this.save();
+
   return unflagged;
 
 }
@@ -319,10 +328,29 @@ ConflictList.prototype.reset = function() {
   this.active = {};
   this.conflicts = {};
 
+  this.save();
+
 }
 
 ConflictList.prototype.save = function() {
 
-  localStorage["conflictList"] = JSON.stringify(this.list);
+  localStorage["conflictList"] = JSON.stringify(this);
+
+}
+
+/*
+ * Load ConflictList from localStorage
+ */
+
+function loadConflictList() {
+
+  var stored = localStorage["conflictList"];
+
+  if(stored) {
+    stored = JSON.parse(stored);
+    return new ConflictList(stored);
+  } else {
+    return new ConflictList();
+  }
 
 }

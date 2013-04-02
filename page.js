@@ -2,7 +2,7 @@ urls = {
   "sectiontip": "sectiontip.php"
 },
 sectionList = loadSectionList(),
-conflictList = new ConflictList(),
+conflictList = loadConflictList(),
 semester = 0;
 
 /*
@@ -34,6 +34,14 @@ $(function() {
 
   for(var i = 0; i < sectionList.list.length; i++) {
     appendToClassList(sectionList.list[i]);
+  }
+
+  for(var s in conflictList.active) {
+    if(conflictList.conflicts[s].size > 0) {
+      $("#" + s).addClass('conflict');
+    } else {
+      $("#" + s).addClass('no-conflict');
+    }
   }
 
   $("table .UnitName").attr("colspan", 9);
