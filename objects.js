@@ -53,7 +53,7 @@ Section.prototype.isOverlap = function(section) {
     return false;
   }
 
-  if(section.semester !== this.semeseter) {
+  if(section.semester !== this.semester) {
     return false;
   }
 
