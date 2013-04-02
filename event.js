@@ -13,15 +13,22 @@ $(function() {
 
   $(".lousList_extension_savedClassList_clear").on("click", function(e) {
     e.preventDefault();
+    // Remove GUI components
     $("#lousList_extension_savedClassList ul").html("");
+    removePopups();
+
+    // Reset conflictList and sectionList
+    conflictList.reset();
     sectionList = new SectionList([]);
     sectionList.save();
   });
 
   $(".lousList_extension_savedClassList_clear_selected").on("click", function(e) {
     e.preventDefault();
-    selectedList = {};
-    conflicts = {};
+    // Reset conflict List
+    conflictList.reset();
+
+    // GUI reset of conflict classes
     $("#lousList_extension_savedClassList ul li").each(function() {
       if($(this).hasClass("conflict")) {
         $(this).removeClass("conflict");
@@ -34,6 +41,7 @@ $(function() {
   $(".lousList_extension_saveSection").on("click", function(e) {
     e.stopPropagation();
     e.preventDefault();
+    // Parse row
     var selectedRow = $(e.target).parents(".S");
     var sectionRowData = parseSectionRow(selectedRow),
         courseRowData = parseCourseRow(selectedRow.prevAll(".CourseInfo:first"));
@@ -41,6 +49,7 @@ $(function() {
         section = new Section(course, sectionRowData.sectionNbr, sectionRowData.sectionType,
           sectionRowData.sectionInstructor, sectionRowData.sectionTime, sectionRowData.sectionPlace,
           semester, document.URL);
+    // Add class to sectionList
     if(sectionList.add(section)) {
       appendToClassList(section);
     }
@@ -49,62 +58,47 @@ $(function() {
   $("body").on("click", ".lousList_extension_class_remove", function(e) {
     e.stopPropagation();
     e.preventDefault();
+    // Remove from conflictList and sectionList
     var sectionIdentifier = $(this).attr("id").split("-"),
-        el = $(this).parent().parent();
-    sectionList.remove(sectionIdentifier[2], sectionIdentifier[1]);
-    if(el.hasClass("conflict") || el.hasClass("no-conflict")) {
-      delete selectedList[sectionIdentifier[1] + "-" + sectionIdentifier[2]];
+        removedSection = sectionList.remove(sectionIdentifier[2], sectionIdentifier[1]),
+        el = $(this).parent().parent(),
+        removedConflicts = conflictList.remove(removedSection, el.hasClass("no-conflict"));
+    // Alter GUI components
+    for(s in removedConflicts) {
+      $("#" + removedConflicts[s])
+        .removeClass("conflict").addClass("no-conflict");
     }
-    // Resolve conflicts
+    removePopups();
     el.remove();
   });
 
   $("body").on("click", ".lousList_extension_class", function(e) {
+    // Find info about the GUI element clicked
     var el = $(this),
         index = $(".lousList_extension_class").index($(this)),
         section = sectionList.list[index],
         id = el.attr("id");
+    // Determine conflicts
     if(el.hasClass("no-conflict")) {
       el.removeClass("no-conflict");
-      delete conflicts[section.id];
-      delete selectedList[id];
+      conflictList.remove(section, true);
     } else if(el.hasClass("conflict")) {
       el.removeClass("conflict");
-      for(c in conflicts[section.id]) {
-        if(c !== "size") {
-          console.log(c);
-          if(section.id in conflicts[c]) {
-            delete conflicts[c][section.id];
-            conflicts[c].size--;
-            if(conflicts[c].size === 0) {
-              $("#" + c).removeClass("conflict").addClass("no-conflict");
-            }
-          }
-        }
+      var removedConflicts = conflictList.remove(section, false);
+      for(s in removedConflicts) {
+        $("#" + removedConflicts[s])
+          .removeClass("conflict").addClass("no-conflict");
       }
-      delete conflicts[section.id];
-      delete selectedList[id];
     } else {
-      var conflict = false;
-      if(!(section.id in conflicts)) {
-        conflicts[section.id] = {
-          "size": 0
-        }
-      }
-      for(var s in selectedList) {
-        if(selectedList[s].isOverlap(section)) {
-          $("#" + selectedList[s].id)
+      var sectionConflicts = conflictList.add(section); 
+      for(var s in sectionConflicts) {
+        if(s !== "size" && s !== "key") {
+          $("#" + s)
             .removeClass("no-conflict").removeClass("conflict")
-            .addClass("conflict");
-          conflict = true;
-          conflicts[selectedList[s].id].size++;
-          conflicts[selectedList[s].id][section.id] = true;
-          conflicts[section.id].size++;
-          conflicts[section.id][selectedList[s].id] = true;
+            .addClass("conflict");  
         }
       }
-      selectedList[id] = section;
-      if(conflict) {
+      if(sectionConflicts.size > 0) {
         $(this).addClass("conflict");
       } else {
         $(this).addClass("no-conflict");
@@ -197,6 +191,10 @@ $(function() {
     $(".lousList_extension_class_popup_arrow").css({
       "top": arrowTop
     });
+  }
+  
+  function removePopups() {
+    $(".lousList_extension_class_popup").remove();
   }
 
 });

@@ -160,12 +160,15 @@ function SectionTime(str) {
  */
 
 function loadSectionList() {
-  var storedList = JSON.parse(localStorage["sectionList"]),
+  var storedList = localStorage["sectionList"],
       convertedList = [];
-  for(var key in storedList) {
-    convertedList.push(new Section(storedList[key].course, storedList[key].nbr, storedList[key].type,
-      storedList[key].instructor, storedList[key].time.raw, storedList[key].place, storedList[key].semester,
-      storedList[key].source));
+  if(storedList) {
+    storedList = JSON.parse(storedList);
+    for(var key in storedList) {
+      convertedList.push(new Section(storedList[key].course, storedList[key].nbr, storedList[key].type,
+        storedList[key].instructor, storedList[key].time.raw, storedList[key].place, storedList[key].semester,
+        storedList[key].source));
+    }
   }
   return new SectionList(convertedList);
 }
@@ -210,13 +213,30 @@ SectionList.prototype.add = function(section) {
 
 SectionList.prototype.remove = function(section_nbr, semester) {
 
+  var removed = null;
+
   for(var i = 0; i < this.list.length; i++) {
     if(this.list[i].id == semester + "-" + section_nbr) {
-      this.list.splice(i, 1);
+      removed = this.list.splice(i, 1)[0];
     }
   }
 
   this.save();
+
+  return removed;
+
+}
+
+SectionList.prototype.find = function(id) {
+
+  for(var i = 0; i < this.list.length; i++) {
+    console.log(this.list[i].id);
+    if(this.list[i].id == id) {
+      return this.list[i]; 
+    }
+  }
+
+  return null;
 
 }
 
@@ -248,7 +268,8 @@ ConflictList.prototype.add = function(section) {
 
   if(!(section.id in this.conflicts)) {
     this.conflicts[section.id] = {
-      "size": 0
+      "size": 0,
+      "key": section.id
     }
   }
 
@@ -268,7 +289,35 @@ ConflictList.prototype.add = function(section) {
 
 }
 
-ConflictList.prototype.remove = function(section) {
+ConflictList.prototype.remove = function(section, noConflicts) {
+
+  var unflagged = [];
+
+  if(!noConflicts) {
+    for(c in this.conflicts[section.id]) {
+      if(c !== "size" && c !== "key") {
+        if(section.id in this.conflicts[c]) {
+          delete this.conflicts[c][section.id];
+          this.conflicts[c].size--;
+          if(this.conflicts[c].size === 0) {
+            unflagged.push(this.conflicts[c].key);
+          }
+        }
+      }
+    }
+  }
+
+  delete this.conflicts[section.id];
+  delete this.active[section.id];
+
+  return unflagged;
+
+}
+
+ConflictList.prototype.reset = function() {
+  
+  this.active = {};
+  this.conflicts = {};
 
 }
 

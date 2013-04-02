@@ -2,8 +2,7 @@ urls = {
   "sectiontip": "sectiontip.php"
 },
 sectionList = loadSectionList(),
-selectedList = {},
-conflicts = {},
+conflictList = new ConflictList(),
 semester = 0;
 
 /*
