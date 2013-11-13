@@ -2,8 +2,6 @@
 
 I no longer am maintaining this project, if you are interested in maintaining it please contact me.
 
-[Download](https://chrome.google.com/webstore/detail/lous-list/fpcleiagbmdjlfkidbcjplddafdempid)
+[Chrome Download](https://chrome.google.com/webstore/detail/lous-list/fpcleiagbmdjlfkidbcjplddafdempid)
+[Firefox Download](https://addons.mozilla.org/en-US/firefox/addon/lous-list-firefox/)
 
-TODO:
-
-  * add firefox plugin support

@@ -42,9 +42,9 @@ $(function() {
     e.stopPropagation();
     e.preventDefault();
     // Parse row
-    var selectedRow = $(e.target).parents(".S");
+    var selectedRow = $(this).parents(".S");
     var sectionRowData = parseSectionRow(selectedRow),
-        courseRowData = parseCourseRow(selectedRow.prevAll(".CourseInfo:first"));
+        courseRowData = parseCourseRow(selectedRow.prevAll(".CourseInfo:first")),
         course = new Course(courseRowData.courseNbr, courseRowData.courseName),
         section = new Section(course, sectionRowData.sectionNbr, sectionRowData.sectionType,
           sectionRowData.sectionInstructor, sectionRowData.sectionTime, sectionRowData.sectionPlace,
@@ -151,20 +151,20 @@ $(function() {
   function parseSectionRow(row) {
     var tableCells = row.find("td"),
         data = {
-          "sectionNbr":         $.trim(tableCells[0].innerText),
-          "sectionType":        $.trim(tableCells[2].innerText),
-          "sectionInstructor":  $.trim(tableCells[5].innerText),
-          "sectionPlace":       $.trim(tableCells[7].innerText),
-          "sectionTime":        $.trim(tableCells[6].innerText)
-        }
+          "sectionNbr":         $.trim(tableCells[0].innerText || tableCells[0].textContent),
+          "sectionType":        $.trim(tableCells[2].innerText || tableCells[2].textContent),
+          "sectionInstructor":  $.trim(tableCells[5].innerText || tableCells[5].textContent),
+          "sectionPlace":       $.trim(tableCells[7].innerText || tableCells[7].textContent),
+          "sectionTime":        $.trim(tableCells[6].innerText || tableCells[6].textContent)
+        };
     return data;
   }
 
   function parseCourseRow(row) {
     var tableCells = row.find("td"),
         data = {
-          "courseNbr":          $.trim(tableCells[0].innerText),
-          "courseName":         $.trim(tableCells[1].innerText)
+          "courseNbr":          $.trim(tableCells[0].innerText || tableCells[0].textContent),
+          "courseName":         $.trim(tableCells[1].innerText || tableCells[1].textContent)
         }
     return data;
   }

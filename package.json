@@ -1,0 +1,17 @@
+{
+    "id": "jid1-LkYuN6jZbT7VLQ", 
+    "main": "firefox.js", 
+
+    "name": "lous-list-ffx", 
+    "fullName": "Lou's List (Firefox)", 
+
+    "lib": "src",
+
+    "version": "1.5.1", 
+
+    "icon": "icon.png", 
+
+    "author": "Ferris Tseng", 
+    "license": "MIT", 
+    "description": "Adds additional functionality onto Lou's List"
+}

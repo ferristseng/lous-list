@@ -125,12 +125,16 @@ function parseSectionTime(str) {
   } else {
     var parts = str.split(" "),
         matches = parts[0].match(re);
+    console.log(str);
+    console.log(parts);
     // set which days you have class on
-    for(var i = 0; i < matches.length; i++) {
-      days[matches[i]] = true;
+    if (matches) {
+      for(var i = 0; i < matches.length; i++) {
+        days[matches[i]] = true;
+      }
+      times['start'] = parts[1];
+      times['end'] = parts[3];
     }
-    times['start'] = parts[1];
-    times['end'] = parts[3];
   }
   return {
     "days": days,

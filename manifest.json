@@ -15,14 +15,14 @@
       "http://rabi.phys.virginia.edu/mySIS/CS2/search.php*"
     ],
     "css": [ 
-      "style.css" 
+      "src/style.css" 
     ],
     "js": [
-      "jquery-1.9.1.min.js",
-      "utility.js",
-      "objects.js",
-      "page.js",
-      "event.js" 
+      "src/jquery-1.9.1.min.js",
+      "src/utility.js",
+      "src/objects.js",
+      "src/page.js",
+      "src/event.js" 
     ],
     "run_at": "document_start"
   }]
