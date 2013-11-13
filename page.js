@@ -49,13 +49,13 @@ $(function() {
   $("table .CourseName").attr("colspan", 8);
 
   $("table .S").each(function() {
-    if($(this).attr("onclick")) {
+    if($(this).hasClass("SectionOdd") || $(this).hasClass("SectionEven")) {
       $(this).append("" +
         "<td>" +
           "<a href='#' class='lousList_extension_saveSection'>Save</a>" +
         "</td>" +
       "");
-    } else if(
+    } else if (
       !$(this).hasClass('SectionTopicOdd') && !$(this).hasClass('SectionTopicEven') &&
       !$(this).hasClass('SectionTitleOdd') && !$(this).hasClass('SectionTitleEven')
     ) {

@@ -119,14 +119,18 @@ $(function() {
           data: { "Semester": section.semester, "ClassNumber": section.nbr },
           dataType: "html",
           success: function(html) {
-            var tableBody = $(html).find("table:last").html();
+            var tableBody = $("table:last", $.parseHTML(html));
+
+            // Sanitize TD header
+            tableBody.find("tr:first td:first").html("Enrollment:");
+
             $(".louList_extension_class_popup").remove();
             $("body").prepend("" +
               "<div class='lousList_extension_class_popup'>" +
                 "<div class='lousList_extension_class_popup_arrow'></div>" +
                 "<div class='lousList_extension_class_popup_inner'>" +
                   "<table>" +
-                    tableBody + 
+                    tableBody.html() + 
                   "</table>" +
                 "</div>" + 
               "</div>");

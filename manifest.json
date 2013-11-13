@@ -3,13 +3,16 @@
 
   "name": "Lou's List",
   "description": "Adds additional functionality onto Lou's List",
-  "version": "1.0.4", 
+  "version": "1.0.5", 
 
   "permissions": [ ],
 
   "content_scripts": [{
     "matches": [
-      "http://rabi.phys.virginia.edu/mySIS/CS2/*"
+      "http://rabi.phys.virginia.edu/mySIS/CS2/page.php*",
+      "http://rabi.phys.virginia.edu/mySIS/CS2/index.php*",
+      "http://rabi.phys.virginia.edu/mySIS/CC2/*.html",
+      "http://rabi.phys.virginia.edu/mySIS/CS2/search.php*"
     ],
     "css": [ 
       "style.css" 
